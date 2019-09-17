@@ -25,6 +25,9 @@ declare class loan {
     readonly daysAjust: number;
     datePayment: (installment: number) => Date;
     calcIofNoAdjust: () => number;
+    calcIofWithAdjust: () => number;
+    testeCalc: () => number;
 }
+declare function testeNoAdj(x: loan): void;
 declare let x: loan;
 //# sourceMappingURL=index.d.ts.map
