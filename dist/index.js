@@ -5,7 +5,6 @@ class loan {
         this.dateSimulate = new Date();
         this.dateFirstPay = loan.dateAddMonth(new Date(), 1);
         this.valueLoan = 0;
-        // public get valueTotalLoan(): number { return this.valueLoan };
         this.valueInterest = 4.5;
         this.valueIOF = 0.0082;
         this.valueIOFAdd = 0.38;
@@ -19,28 +18,18 @@ class loan {
             let baseIof = 0;
             let cursor = this.installments;
             let ret = 0;
-            let aux3 = 1;
-            let aux4 = 1;
-            if (this.daysAjust > 0) {
-                aux3 = (Math.pow(this.taxInterest + 1, (this.daysAjust / 30 + 1))) - 1;
-                aux4 = Math.pow(this.taxInterest + 1, (this.daysAjust / 30));
-            }
-            if (cursor != this.installments)
-                valueFunded = valueFunded * aux4;
-            else
-                valueFunded = valueFunded * aux3;
             let installmentValue = loan.valueCalcInstallment(valueFunded, this.taxInterest, this.installments);
-            let dayPayment = loan.dateAddMonth(this.dateFirstPay, this.installments - 1);
+            let dayPayment = loan.dateAddMonth(this.dateStartLoan, this.installments);
             do {
                 baseIof = installmentValue / Math.pow(1 + this.taxInterest, exp);
-                let daysToPayment = loan.daysBetweenDates(this.dateSimulate, dayPayment);
+                let daysToPayment = loan.daysBetweenDates(this.dateStartLoan, dayPayment);
                 if (daysToPayment > 365)
                     daysToPayment = 365;
                 let valueIOFInstallment = baseIof * daysToPayment * (this.taxIOF);
                 ret += valueIOFInstallment;
                 exp++;
                 cursor--;
-                dayPayment = loan.dateAddMonth(this.dateFirstPay, this.installments - exp);
+                dayPayment = loan.dateAddMonth(this.dateStartLoan, this.installments + 1 - exp);
             } while (cursor > 0);
             ret = ret + calcIofNoAdjustAdd;
             ret = (valueFunded /
@@ -49,6 +38,7 @@ class loan {
         };
     }
     ;
+    get dateStartLoan() { return loan.dateAddDays(this.dateSimulate, this.daysAjust); }
     get taxInterest() { return this.valueInterest / 100; }
     get taxIOF() { return this.valueIOF / 100; }
     get taxIOFAdd() { return this.valueIOFAdd / 100; }
@@ -86,8 +76,8 @@ loan.dateAddMonth = (date, month) => {
 };
 let x = new loan();
 x.dateSimulate = new Date('2019-09-17T23:00:00.000Z');
-x.dateFirstPay = new Date('2019-10-17T00:00:01.001Z');
-x.valueLoan = 41345.64;
+x.dateFirstPay = new Date('2019-10-30T00:00:01.001Z');
+x.valueLoan = 50000;
 x.valueInterest = 3.25;
 x.installments = 4;
 console.log('4\t x 511,80 \t---', loan.valueRound(x.calcIofNoAdjust()) / 511.80, loan.valueRound(x.calcIofNoAdjust()));

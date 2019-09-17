@@ -38,9 +38,8 @@ class loan {
 
     public dateSimulate: Date = new Date();
     public dateFirstPay: Date = loan.dateAddMonth(new Date(), 1);
-
+    public get dateStartLoan(): Date { return loan.dateAddDays(this.dateSimulate, this.daysAjust) }
     public valueLoan: number = 0;
-    // public get valueTotalLoan(): number { return this.valueLoan };
     public valueInterest: number = 4.5;
     public valueIOF: number = 0.0082;
     public valueIOFAdd: number = 0.38;
@@ -65,30 +64,18 @@ class loan {
         let exp: number = 1;
         let baseIof: number = 0;
         let cursor: number = this.installments;
-        let ret: number = 0;
-        let aux3 = 1;
-        let aux4 = 1;
-
-        if (this.daysAjust > 0) {
-            aux3 = (Math.pow(this.taxInterest + 1, (this.daysAjust / 30 + 1))) - 1;
-            aux4 = Math.pow(this.taxInterest + 1, (this.daysAjust / 30));
-        }
-        if (cursor != this.installments)
-            valueFunded = valueFunded * aux4;
-        else
-            valueFunded = valueFunded * aux3;
-
+        let ret: number = 0;        
         let installmentValue: number = loan.valueCalcInstallment(valueFunded, this.taxInterest, this.installments);
-        let dayPayment: Date = loan.dateAddMonth(this.dateFirstPay, this.installments -1);
+        let dayPayment: Date = loan.dateAddMonth(this.dateStartLoan, this.installments);
         do {
             baseIof = installmentValue / Math.pow(1 + this.taxInterest, exp);
-            let daysToPayment = loan.daysBetweenDates(this.dateSimulate, dayPayment);
+            let daysToPayment = loan.daysBetweenDates(this.dateStartLoan, dayPayment);
             if (daysToPayment > 365) daysToPayment = 365;
-            let valueIOFInstallment = baseIof * daysToPayment * (this.taxIOF);           
+            let valueIOFInstallment = baseIof * daysToPayment * (this.taxIOF);
             ret += valueIOFInstallment;
             exp++;
             cursor--;
-            dayPayment = loan.dateAddMonth(this.dateFirstPay, this.installments  - exp);
+            dayPayment = loan.dateAddMonth(this.dateStartLoan, this.installments + 1 - exp);
         } while (cursor > 0)
 
         ret = ret + calcIofNoAdjustAdd;
@@ -103,8 +90,8 @@ class loan {
 
 let x = new loan();
 x.dateSimulate = new Date('2019-09-17T23:00:00.000Z');
-x.dateFirstPay = new Date('2019-10-17T00:00:01.001Z');
-x.valueLoan = 41345.64;
+x.dateFirstPay = new Date('2019-10-30T00:00:01.001Z');
+x.valueLoan = 50000;
 x.valueInterest = 3.25;
 
 x.installments = 4;

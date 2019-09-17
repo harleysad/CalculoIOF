@@ -11,6 +11,7 @@ declare class loan {
     static dateAddMonth: (date: Date, month: number) => Date;
     dateSimulate: Date;
     dateFirstPay: Date;
+    readonly dateStartLoan: Date;
     valueLoan: number;
     valueInterest: number;
     valueIOF: number;
