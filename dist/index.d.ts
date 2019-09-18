@@ -31,5 +31,6 @@ declare class loan {
 declare function testeNoAdj(x: loan): void;
 declare function testeWithAdj(x: loan): void;
 declare function testeWithAdj2(x: loan): void;
+declare function testeWithAdj3(x: loan): void;
 declare let x: loan;
 //# sourceMappingURL=index.d.ts.map

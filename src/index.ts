@@ -90,7 +90,7 @@ class loan {
             let daysToPayment = loan.daysBetweenDates(this.dateStartLoan, dayPayment);
             if (daysToPayment > 365) daysToPayment = 365;
             let valueIOFInstallment = baseIof * daysToPayment * (this.taxIOF);
-            ret += loan.valueRound(valueIOFInstallment, 6);
+            ret += valueIOFInstallment;
             exp++;
             cursor--;
             dayPayment = loan.dateAddMonth(this.dateStartLoan, this.installments + 1 - exp);
@@ -203,25 +203,48 @@ function testeWithAdj(x: loan) {
 
 function testeWithAdj2(x: loan) {
     x.installments = 4;
-    console.log(4, 569.06 / loan.valueRound(x.testeCalc()), 569.06 , loan.valueRound(x.testeCalc()));
+    console.log(4, 569.06 / loan.valueRound(x.testeCalc()), 569.06, loan.valueRound(x.testeCalc()));
     x.installments = 8;
-    console.log(8, 845.34 / loan.valueRound(x.testeCalc()), 845.34 , loan.valueRound(x.testeCalc()));
+    console.log(8, 845.34 / loan.valueRound(x.testeCalc()), 845.34, loan.valueRound(x.testeCalc()));
     x.installments = 10;
-    console.log(10, 989.18 / loan.valueRound(x.testeCalc()), 989.18 , loan.valueRound(x.testeCalc()));
+    console.log(10, 989.18 / loan.valueRound(x.testeCalc()), 989.18, loan.valueRound(x.testeCalc()));
     x.installments = 12;
-    console.log(12, 1131.13 / loan.valueRound(x.testeCalc()), 1131.13 , loan.valueRound(x.testeCalc()));
+    console.log(12, 1131.13 / loan.valueRound(x.testeCalc()), 1131.13, loan.valueRound(x.testeCalc()));
     x.installments = 14;
-    console.log(14, 1238.86 / loan.valueRound(x.testeCalc()), 1238.86 , loan.valueRound(x.testeCalc()));
+    console.log(14, 1238.86 / loan.valueRound(x.testeCalc()), 1238.86, loan.valueRound(x.testeCalc()));
     x.installments = 16;
-    console.log(16, 1319.57/ loan.valueRound(x.testeCalc()), 1319.57, loan.valueRound(x.testeCalc()));
+    console.log(16, 1319.57 / loan.valueRound(x.testeCalc()), 1319.57, loan.valueRound(x.testeCalc()));
     x.installments = 18;
-    console.log(18, 1382.18 / loan.valueRound(x.testeCalc()), 1382.18 , loan.valueRound(x.testeCalc()));
+    console.log(18, 1382.18 / loan.valueRound(x.testeCalc()), 1382.18, loan.valueRound(x.testeCalc()));
     x.installments = 20;
-    console.log(20, 1432.07 / loan.valueRound(x.testeCalc()), 1432.07 , loan.valueRound(x.testeCalc()));
+    console.log(20, 1432.07 / loan.valueRound(x.testeCalc()), 1432.07, loan.valueRound(x.testeCalc()));
     x.installments = 22;
     console.log(22, 1472.68 / loan.valueRound(x.testeCalc()), 1472.68, loan.valueRound(x.testeCalc()));
     console.log('******************************************************************');
 }
+
+function testeWithAdj3(x: loan) {
+    x.installments = 4;
+    console.log(4, 524.99 / loan.valueRound(x.testeCalc()), 524.99, loan.valueRound(x.testeCalc()));
+    x.installments = 8;
+    console.log(8, 798.42 / loan.valueRound(x.testeCalc()), 798.42, loan.valueRound(x.testeCalc()));
+    x.installments = 10;
+    console.log(10, 940.35 / loan.valueRound(x.testeCalc()), 940.35, loan.valueRound(x.testeCalc()));
+    x.installments = 12;
+    console.log(12, 1084.67 / loan.valueRound(x.testeCalc()), 1084.67, loan.valueRound(x.testeCalc()));
+    x.installments = 14;
+    console.log(14, 1197.68 / loan.valueRound(x.testeCalc()), 1197.68, loan.valueRound(x.testeCalc()));
+    x.installments = 16;
+    console.log(16, 1286.36 / loan.valueRound(x.testeCalc()), 1286.36, loan.valueRound(x.testeCalc()));
+    x.installments = 18;
+    console.log(18, 1348.05 / loan.valueRound(x.testeCalc()), 1348.05, loan.valueRound(x.testeCalc()));
+    x.installments = 20;
+    console.log(20, 1400.41 / loan.valueRound(x.testeCalc()), 1400.41, loan.valueRound(x.testeCalc()));
+    x.installments = 22;
+    console.log(22, 1443.04 / loan.valueRound(x.testeCalc()), 1443.04, loan.valueRound(x.testeCalc()));
+    console.log('******************************************************************');
+}
+
 let x = new loan();
 x.valueLoan = 50000;
 x.valueInterest = 3.25;
@@ -246,3 +269,8 @@ x.dateSimulate = new Date('2019-09-17T23:00:00.000Z');
 x.dateFirstPay = new Date('2019-10-30T00:00:01.001Z');
 console.log(x.daysAjust);
 testeWithAdj2(x);
+
+x.dateSimulate = new Date('2019-09-17T23:00:00.000Z');
+x.dateFirstPay = new Date('2019-10-20T00:00:01.001Z');
+console.log(x.daysAjust);
+testeWithAdj3(x);
