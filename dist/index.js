@@ -57,7 +57,7 @@ class loan {
                 if (daysToPayment > 365)
                     daysToPayment = 365;
                 let valueIOFInstallment = baseIof * daysToPayment * (this.taxIOF);
-                ret += loan.valueRound(valueIOFInstallment, 5);
+                ret += valueIOFInstallment;
                 dayPayment = loan.dateAddMonth(this.dateStartLoan, this.installments - exp);
                 exp++;
                 cursor++;
@@ -121,8 +121,8 @@ loan.dateAddMonth = (date, month) => {
     let swp = loan.dateClearTime(date);
     swp.setMonth(swp.getMonth() + month, swp.getDate());
     loan.dateClearTime(swp);
-    if (swp.getDate() !== date.getDate())
-        console.log(date, month, swp);
+    // if (swp.getDate() !== date.getDate())
+    //     console.log(date, month, swp);
     loan.dateClearTime(swp);
     return swp;
 };
@@ -147,6 +147,48 @@ function testeNoAdj(x) {
     console.log('24\t x 1469,83 \t---', loan.valueRound(x.testeCalc()) / 1469.83, loan.valueRound(x.testeCalc()));
     console.log('******************************************************************');
 }
+function testeWithAdj(x) {
+    x.installments = 4;
+    console.log(4, 616.29 / loan.valueRound(x.testeCalc()), 616.29, loan.valueRound(x.testeCalc()));
+    x.installments = 8;
+    console.log(8, 895.54 / loan.valueRound(x.testeCalc()), 895.54, loan.valueRound(x.testeCalc()));
+    x.installments = 10;
+    console.log(10, 1041.10 / loan.valueRound(x.testeCalc()), 1041.10, loan.valueRound(x.testeCalc()));
+    x.installments = 12;
+    console.log(12, 1180.43 / loan.valueRound(x.testeCalc()), 1180.43, loan.valueRound(x.testeCalc()));
+    x.installments = 14;
+    console.log(14, 1282.25 / loan.valueRound(x.testeCalc()), 1282.25, loan.valueRound(x.testeCalc()));
+    x.installments = 16;
+    console.log(16, 1358.52 / loan.valueRound(x.testeCalc()), 1358.52, loan.valueRound(x.testeCalc()));
+    x.installments = 18;
+    console.log(18, 1417.67 / loan.valueRound(x.testeCalc()), 1417.67, loan.valueRound(x.testeCalc()));
+    x.installments = 20;
+    console.log(20, 1464.80 / loan.valueRound(x.testeCalc()), 1464.80, loan.valueRound(x.testeCalc()));
+    x.installments = 22;
+    console.log(22, 1503.17 / loan.valueRound(x.testeCalc()), 1503.17, loan.valueRound(x.testeCalc()));
+    console.log('******************************************************************');
+}
+function testeWithAdj2(x) {
+    x.installments = 4;
+    console.log(4, 569.06 / loan.valueRound(x.testeCalc()), 569.06, loan.valueRound(x.testeCalc()));
+    x.installments = 8;
+    console.log(8, 845.34 / loan.valueRound(x.testeCalc()), 845.34, loan.valueRound(x.testeCalc()));
+    x.installments = 10;
+    console.log(10, 989.18 / loan.valueRound(x.testeCalc()), 989.18, loan.valueRound(x.testeCalc()));
+    x.installments = 12;
+    console.log(12, 1131.13 / loan.valueRound(x.testeCalc()), 1131.13, loan.valueRound(x.testeCalc()));
+    x.installments = 14;
+    console.log(14, 1238.86 / loan.valueRound(x.testeCalc()), 1238.86, loan.valueRound(x.testeCalc()));
+    x.installments = 16;
+    console.log(16, 1319.57 / loan.valueRound(x.testeCalc()), 1319.57, loan.valueRound(x.testeCalc()));
+    x.installments = 18;
+    console.log(18, 1382.18 / loan.valueRound(x.testeCalc()), 1382.18, loan.valueRound(x.testeCalc()));
+    x.installments = 20;
+    console.log(20, 1432.07 / loan.valueRound(x.testeCalc()), 1432.07, loan.valueRound(x.testeCalc()));
+    x.installments = 22;
+    console.log(22, 1472.68 / loan.valueRound(x.testeCalc()), 1472.68, loan.valueRound(x.testeCalc()));
+    console.log('******************************************************************');
+}
 let x = new loan();
 x.valueLoan = 50000;
 x.valueInterest = 3.25;
@@ -163,5 +205,9 @@ testeNoAdj(x);
 x.dateSimulate = new Date('2019-09-17T23:00:00.000Z');
 x.dateFirstPay = new Date('2019-11-10T00:00:01.001Z');
 console.log(x.daysAjust);
-testeNoAdj(x);
+testeWithAdj(x);
+x.dateSimulate = new Date('2019-09-17T23:00:00.000Z');
+x.dateFirstPay = new Date('2019-10-30T00:00:01.001Z');
+console.log(x.daysAjust);
+testeWithAdj2(x);
 //# sourceMappingURL=index.js.map
