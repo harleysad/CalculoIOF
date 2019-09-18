@@ -124,17 +124,17 @@ class loan {
         do {
 
             if (cursor == this.installments)
-                baseIof = installmentValue - (valueFunded * aux3);
+                 baseIof = installmentValue - (valueFunded * aux3);
             else
-                baseIof = installmentValue / (Math.pow(1 + this.taxInterest, exp));
-            
+               baseIof = installmentValue / (Math.pow(1 + this.taxInterest, exp));
+
             let daysToPayment = loan.daysBetweenDates(this.dateSimulate, dayPayment);
             if (daysToPayment > 365) daysToPayment = 365;
-            
-            let valueIOFInstallment = baseIof * daysToPayment * (this.taxIOF);
-            ret += valueIOFInstallment;
-            dayPayment = loan.dateAddMonth(this.dateStartLoan, this.installments - exp);
 
+            let valueIOFInstallment = baseIof * daysToPayment * (this.taxIOF);
+            ret += loan.valueRound(valueIOFInstallment, 5);
+            dayPayment = loan.dateAddMonth(this.dateStartLoan, this.installments - exp);
+          
             exp++;
             cursor++;
 
@@ -190,19 +190,11 @@ x.dateSimulate = new Date('2023-09-17T23:00:00.000Z');
 x.dateFirstPay = new Date('2023-10-17T00:00:01.001Z');
 testeNoAdj(x);
 
-// 4 x 524,99
-// testa com ajuste
 x.dateSimulate = new Date('2019-09-17T23:00:00.000Z');
 x.dateFirstPay = new Date('2019-10-18T00:00:01.001Z');
-x.installments = 4;
 testeNoAdj(x);
-// console.log(x.testeCalc());
 
-
-// x.valueLoan = 50000;
-// x.dateFirstPay = new Date('2040-11-17T00:00:01.001Z');
-// x.installments = 4;
-// console.log('4\t x  569.02 \t---', loan.valueRound(x.testeCalc()));
-// x.installments = 24;
-// console.log('24\t x 1506.33 \t---', loan.valueRound(x.testeCalc()));
-
+x.dateSimulate = new Date('2019-09-17T23:00:00.000Z');
+x.dateFirstPay = new Date('2019-11-10T00:00:01.001Z');
+console.log(x.daysAjust);
+testeNoAdj(x);
